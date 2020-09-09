@@ -1,4 +1,4 @@
-package Classwork;
+package verifyDataPack;
 
 import org.junit.Assert;
 import org.junit.After;
