@@ -190,7 +190,9 @@ We get following result:
 <p align="center">
 	<img width="800px" src="Image/testPassed2.png" align="center"/>
 	<br>
+	<br>
 	<img width="800px" src="Image/testPassed1.png" align="center"/>
+	<br>
 	<br>
 	<img width="800px" src="Image/testPassed.png" align="center"/>
 </p>
