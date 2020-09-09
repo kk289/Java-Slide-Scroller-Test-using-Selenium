@@ -1,6 +1,6 @@
-<h2> How to move Slider on Website Using Selenium WebDriver and Testify using Assertion</h2>
+<h2> How to Scroll Slider on Website Using Selenium WebDriver and Testify using Assertion</h2>
 
-There are many features on webpages where slider is one of them. Slider is more user friendly options than manaully typing while filtering. We can use selenium webdriver to move the slider on website like one we can see down below. Here, we are testing whether the Price slide move to all the way to left ($53). We can check the Range if it is "$53 - $53" or not after moving the slide to highest price, $53. We are using [XPath](https://en.wikipedia.org/wiki/XPath#:~:text=XPath%20(XML%20Path%20Language)%20is,Wide%20Web%20Consortium%20(W3C).) to get the slider on webpage.
+There are many features on webpages where slider is one of them. Slider is more user friendly options than manaully typing while filtering. We can use selenium webdriver to move the slider on website like one we can see down below. Here, we are testing whether the Price slide move to all the way to left ($53). We can check the Range if it is "$53 - $53" or not after moving the slide to highest price, $53. We are using [XPath](https://en.wikipedia.org/wiki/XPath#:~:text=XPath%20(XML%20Path%20Language)%20is,Wide%20Web%20Consortium%20(W3C).) to get the price range from website.
 
 <p align="center">
 	<img width="700px" src="Image/webpage.png" align="center"/>
@@ -108,16 +108,19 @@ An example of [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-
 ```
 package verifyDataPack;
 
+import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.util.List;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 
-public class verifySum {
+public class sliderScrollVerify {
 
     WebDriver wd;
 
@@ -126,67 +129,47 @@ public class verifySum {
     public void openBrowser() {
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver"); // chrome browser
         wd = new ChromeDriver();
-        wd.get("https://www.w3schools.com/sql/sql_count_avg_sum.asp");
+        wd.get("http://automationpractice.com/index.php?id_category=3&controller=category");
     }
 
     @Test
-    public void VerifySum() {
-        // Get number of rows in table
-        List<WebElement> Row_count = wd.findElements(By.xpath("//*[@id='main']/div[6]/table/tbody/tr"));
-        System.out.println("Number of Rows= " + Row_count.size());
+    public void priceSlider() throws InterruptedException{
+        // Scroll down
+        JavascriptExecutor js = (JavascriptExecutor) wd;
+        js.executeScript("window.scrollBy(0,1000)");
+        Thread.sleep(2000);
 
-        // Get number of Columns in table
-        List<WebElement> Col_count = wd.findElements(By.xpath("//*[@id='main']/div[6]/table/tbody/tr[1]/th"));
-        System.out.println("Number of Columns = " + Col_count.size() + "\n");
-
-        // divided Xpath In three parts to pass Row_count and Col_count values.
-        String first_part = "//*[@id='main']/div[6]/table/tbody/tr[";
-        String second_part = "]/td[";
-        String third_part = "]";
-
-        // xpath for Row Header and Extract the data value using Xpath
-        String final_xpath = first_part + 1 + third_part;
-        String Table_data = wd.findElement(By.xpath(final_xpath)).getText();
-        for (String data : Table_data.split(" ")) {
-            System.out.print(String.format("%-28s ", data));
-        }
-        System.out.println();
-
-        // Print out dash line under Row Header
-        for (int i = 0; i < 28 * 6; i++) {
-            System.out.print("-");
-        }
-        System.out.println();
-
-        // Loop to extract all data inside table using xpath
-        for (int i = 2; i <= Row_count.size(); i++) {
-            for (int j = 1; j <= Col_count.size(); j++) {
-                String final_xpath_1 = first_part + i + second_part + j + third_part;
-                String Table_data_2 = wd.findElement(By.xpath(final_xpath_1)).getText();
-                System.out.print(String.format("%-28s ", Table_data_2));
+        int target = 53;
+        int method = 2;  // method controller
+        WebElement slide = wd.findElement(By.xpath("//*[@id='layered_price_slider']/a[1]"));
+        Actions move = new Actions(wd);
+        if (method == 1){
+            for (int i = 1; i <= target; i++){
+                // Slider.sendKeys(Keys.ARROW_RIGHT)
+                Action action = move.dragAndDropBy(slide, i, 0).build();
+                action.perform();
             }
-            System.out.println("");
+        }
+        if (method == 2){
+            move.dragAndDropBy(slide,300,0).build().perform();
+        }
+        if (method == 3){
+            move.moveToElement(slide).clickAndHold().moveToElement(slide, 300, 0).release().perform();
+        }
+        if (method == 4){
+            js.executeScript("arguments[0].setAttribute('style', 'left: 100%;')", slide);
         }
 
-        // Testing
-        Float sum = 0.0f;   // init sum
-        for (int i = 2; i <= Row_count.size(); i++) {
-            String final_xpath_1 = first_part + i + second_part + 6 + third_part;
-            String Table_data_2 = wd.findElement(By.xpath(final_xpath_1)).getText();
-            Float floatVal = Float.valueOf(Table_data_2).floatValue();
-            sum += floatVal;
-        }
+        Thread.sleep(3000);  // verify the level is 53
 
-        System.out.println("\nThe total sum of Price is: " + sum);
-
-        Float expectedSum = 90.35f;   // Enter total sum of price
-        Assert.assertEquals(sum, expectedSum);
-        System.out.println("\nAssertion Passed Successfully.");
+        // Assertion
+        Assert.assertEquals(wd.findElement(By.id("layered_price_range")).getText(), "$53.00 - $53.00");
     }
 
     @After
     // Close the browser
     public void Close() throws InterruptedException {
+        Thread.sleep(2000);
         wd.quit();
     }
 }
