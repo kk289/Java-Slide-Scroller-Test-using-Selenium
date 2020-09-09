@@ -140,7 +140,7 @@ public class sliderScrollVerify {
         Thread.sleep(2000);
 
         int target = 53;
-        int method = 2;  // method controller
+        int method = 2;  // Choose 1-4 method
         WebElement slide = wd.findElement(By.xpath("//*[@id='layered_price_slider']/a[1]"));
         Actions move = new Actions(wd);
         if (method == 1){
@@ -175,21 +175,31 @@ public class sliderScrollVerify {
 }
 ```
 
-We are extracting the information of table first. Then We are testing whether the total sum of "Price" is matched with our expected sum (user input on number line 76) or not. If it equal with expected total sum, the test is passed, and if not, the program will fail to run.
+There are altogether four methods to scroll the slider on website. 
 
-Let's run the "verifySum" class. 
+Method 1 is using for-loop where it runs until it doesn't find the end of the loop. so it may takes some time. It runs 100% but we just need to wait until loop finish. I recommend to use either method 2 or 3.
+
+If we look at the method 3 (also method 2), remember this: moveToElement() or dragAndDropBy() need three variables which are WebElement, xOffSet, yOffSet. In our case right now, we define WebElement as slide. Here we only have horizontal slide bar so we just need xOffSet, so we keep 300 for xOffSet. yOffSet remains 0. For vertical slider, we need to keep xOffSet to 0 and change yOffSet.
+
+NOTE: Method 4 only move the slider, it doesn't change the data. Just use method 1-3 only this time. I'm still working on method 4. 
+
+Let's run the "verifySum" class using Method 3. 
 
 We get following result: 
 
 <p align="center">
+	<img width="800px" src="Image/testPassed2.png" align="center"/>
+	<br>
+	<img width="800px" src="Image/testPassed1.png" align="center"/>
+	<br>
 	<img width="800px" src="Image/testPassed.png" align="center"/>
 </p>
 
 <br>
 
-The program runs successfully. It print out all information including how many rows (data) are there under the selected header. For testing part, it successfully matched the total sum with expected total price. 
+The program runs successfully. For testing part, the assertion passed with same amount of price range: $53 - $53.
 
-We can also input some wrong total sum, and we should expect the following result where the test is failed because the expected sum doesnt match with actual total sum.
+We can also input some wrong price range in assertion, and we should expect the following result where the test is failed because the expected price range doesnt match with actual price range.
 
 <p align="center">
 	<img width="800px" src="Image/testfailed.png" align="center"/>
