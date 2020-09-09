@@ -33,11 +33,9 @@ Platform supporting Maven: [IntelliJ IDEA CE](https://www.jetbrains.com/idea/dow
 
 Maven addresses two aspects of building software: how software is built, and its dependencies. An XML file describes the software project being built, its dependencies on other external modules and components, the build order, directories, and required plug-ins. It comes with pre-defined targets for performing certain well-defined tasks such as compilation of code and its packaging. 
 
-Maven dynamically downloads Java libraries and Maven plug-ins from one or more repositories such as the Maven 2 Central Repository, and stores them in a local cache. Maven projects are configured using a Project Object Model, which is stored in a [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium
-/blob/master/pom.xml) file."
+Maven dynamically downloads Java libraries and Maven plug-ins from one or more repositories such as the Maven 2 Central Repository, and stores them in a local cache. Maven projects are configured using a Project Object Model, which is stored in a [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium/blob/master/pom.xml) file."
 
-An example of [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium
-/blob/master/pom.xml) file looks like: 
+An example of [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium/blob/master/pom.xml) file looks like: 
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -98,8 +96,7 @@ An example of [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-
 </project>
 ```
 
-9. Make sure to setup your "pom.xml" file like above. Just replace your pom.xml file with this [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium
-/blob/master/pom.xml)
+9. Make sure to setup your "pom.xml" file like above. Just replace your pom.xml file with this [pom.xml](https://github.com/kk289/Java-Slide-Scroller-Test-using-Selenium/blob/master/pom.xml)
 
 10. Let's look at "sliderScrollVerify" class:
 
